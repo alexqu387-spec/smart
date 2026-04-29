@@ -11,6 +11,8 @@ exports.handler = async (event) => {
     };
   }
 
+  const body = event.body ? event.body : JSON.stringify({error: "no body received"});
+
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -18,7 +20,7 @@ exports.handler = async (event) => {
       "x-api-key": process.env.ANTHROPIC_API_KEY,
       "anthropic-version": "2023-06-01",
     },
-    body: event.body,
+    body: body,
   });
 
   const data = await response.json();
