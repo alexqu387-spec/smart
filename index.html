@@ -1120,7 +1120,7 @@ Keep responses SHORT — 2 to 4 sentences max. Sound like a real person, not a r
     const typingInterval = addTyping();
 
     try {
-      const res = await fetch('/api/claude', {
+      const res = await fetch('/.netlify/functions/claude-proxy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
