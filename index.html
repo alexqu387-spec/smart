@@ -1124,7 +1124,7 @@ Keep responses SHORT — 2 to 4 sentences max. Sound like a real person, not a r
         role: m.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: m.content }]
       }));
-      const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyCHyc10NV2nDMKzz6eOW_wkAKRDBT31Fdo', {
+      const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyCHyc10NV2nDMKzz6eOW_wkAKRDBT31Fdo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
