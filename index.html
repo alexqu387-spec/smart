@@ -1104,6 +1104,127 @@ Keep responses SHORT — 2 to 4 sentences max. Sound like a real person, not a r
     return setInterval(() => { const el = document.getElementById('dots'); if(el) el.textContent = ['...','.. ','.. ','...'][d++%4]; }, 400);
   }
 
+  const responses = {
+    identity: [
+      "I'm StudyGuide, an AI study coach built by Alex! I help students think through problems instead of just giving answers — like a patient tutor available 24/7!",
+      "Hi! I'm StudyGuide — Alex's custom AI tutor. I use the Socratic method: instead of giving answers, I ask questions that help you discover them yourself!",
+      "Great question! I'm StudyGuide, an AI built by Alex for this project. I help Grade 9 students with homework, essays, test prep, and more!",
+      "我是StudyGuide，Alex建造的AI学习助手！我的工作是帮助学生自己思考答案，而不是直接告诉他们。就像一个随时可用的耐心老师！",
+      "你好！我是StudyGuide——Alex创建的AI辅导工具。我不会直接给答案，而是问你问题，帮你自己找到答案！",
+    ],
+    greeting: [
+      "Hey! I'm StudyGuide, Alex's AI study coach! What subject are you working on today?",
+      "Hi there! Ready to study smart? Tell me what you're struggling with!",
+      "Hello! I'm StudyGuide. I help you think through problems, not just hand you answers. What do you need help with?",
+      "你好！我是StudyGuide，Alex的AI学习助手！今天你需要帮助学习什么科目呢？",
+      "你好！我是StudyGuide。我不会直接给你答案，但我会帮你思考怎么解决问题！今天在学什么？",
+    ],
+    math: [
+      "Let's think step by step! What information do you already have?",
+      "Math can be tricky but you've got this! What operation do you think you need?",
+      "Before we solve it, what do you know about this type of problem?",
+      "Let's break it down. What's the first thing to figure out?",
+      "What formula do you think applies here? Check your notes!",
+      "Try drawing it out! A diagram can make math way easier.",
+      "Walk me through your thinking — what did you try first?",
+      "Remember order of operations? What comes first here?",
+      "Nice try asking me for the answer! What do YOU think the first step is?",
+      "What would happen if you used a simpler number? That usually reveals the pattern!",
+      "让我们一步一步想！你已经知道哪些信息了？",
+      "数学看起来很难，但你可以的！你觉得需要什么运算？",
+      "先不要想最终答案——第一步应该做什么？",
+      "你学过这类题目的公式吗？翻一下笔记看看！",
+      "试着画个图！很多数学题画出来就清楚多了。",
+    ],
+    essay: [
+      "Great topic! What's your thesis — the one main point your essay is trying to make?",
+      "What are your three strongest arguments? Just bullet points for now.",
+      "What evidence supports your main argument?",
+      "Who is your audience? That changes your tone a lot!",
+      "What's the counterargument? Addressing it makes your essay stronger!",
+      "Have you outlined yet? Even a rough one makes writing faster.",
+      "Read your intro out loud — does it grab the reader?",
+      "你的论点是什么？你的文章想表达的最核心观点是什么？",
+      "你有哪三个最强的论据？先写要点，不用写完整句子。",
+      "你有什么证据支持你的论点？",
+      "你的读者是谁？了解读者会影响你的写作风格！",
+    ],
+    science: [
+      "Interesting! What do you already know about this concept?",
+      "What's the key vocabulary word? Breaking it down often explains the concept.",
+      "Think about real life — where do you see this outside of school?",
+      "What's the cause and what's the effect? Try to map it out.",
+      "Try explaining it like I'm 10 years old — if you can do that, you really know it!",
+      "What's the input and what's the output?",
+      "What conditions make this happen? What would stop it?",
+      "这个概念很有意思！你已经了解哪些相关知识了？",
+      "这个科学现象的原因是什么？结果又是什么？",
+      "用简单的话解释给我听——如果你能做到，说明你真的懂了！",
+    ],
+    history: [
+      "What was happening in the world at that time? Context is everything in history!",
+      "Who were the key people and what did they want?",
+      "What were the causes — both immediate and long-term?",
+      "Who benefited? Who was harmed? That usually explains why things happened.",
+      "Why does this still matter today?",
+      "那个时期世界上发生了什么？历史中背景信息非常重要！",
+      "关键人物是谁？他们想要什么？",
+      "这件事的直接原因和深层原因分别是什么？",
+    ],
+    test: [
+      "Test anxiety is real but you've got this! What topics worry you most?",
+      "How much time do you have? Let's figure out what to prioritize.",
+      "Have you tried practice questions? Way more effective than re-reading!",
+      "Make a cheat sheet you can't use — writing it forces you to remember!",
+      "Sleep matters more than cramming — your brain consolidates memory while you sleep!",
+      "Try teaching the concept to someone else. If you can teach it, you know it!",
+      "考试焦虑是真实存在的，但你可以的！你最担心哪些考试内容？",
+      "你还有多少时间？让我们一起决定先复习什么。",
+      "做练习题比反复阅读有效得多！你试过吗？",
+      "睡眠比临时抱佛脚更重要——睡觉时大脑会巩固记忆！",
+    ],
+    stress: [
+      "It's okay to feel overwhelmed — you're dealing with a lot. What's stressing you most?",
+      "Let's break it down. What's the most urgent thing to finish first?",
+      "You don't have to do everything perfectly. What does 'good enough' look like?",
+      "Take a breath. What's one small thing you can check off right now?",
+      "You've made it through hard weeks before. What helped you then?",
+      "感到不知所措是正常的。最让你担心的是什么？",
+      "我们来拆分一下任务。最紧急的是什么？",
+      "不需要每件事都做到完美。'足够好'是什么样的？",
+    ],
+    default: [
+      "Great question! What do you already know about this?",
+      "Interesting! What's your first instinct? Sometimes your gut is right!",
+      "What subject is this for? That'll help me ask better questions!",
+      "What have you tried so far? Let's build on that.",
+      "What does your teacher or textbook say about this?",
+      "I'm not going to give you the answer — but I WILL help you find it! What's your starting point?",
+      "Tell me more and I'll ask questions to help you figure it out!",
+      "What do you know for sure about this? Let's start there.",
+      "这是个好问题！你已经对这个话题了解多少了？",
+      "有趣！你的第一直觉是什么？",
+      "这是哪个科目的问题？知道科目可以帮我问你更好的问题！",
+      "你已经尝试过什么了？让我们在你已有的基础上继续。",
+      "我不会直接给你答案——但我会帮你找到它！你的起点是什么？",
+      "多告诉我一些，我会帮你思考怎么解决！",
+    ]
+  };
+
+  function getResponse(text) {
+    const t = text.toLowerCase();
+    let pool = responses.default;
+    if (/who are you|what are you|introduce yourself|你是谁|介绍/.test(t)) pool = responses.identity;
+    else if (/^(hi|hello|hey|你好|早|嗨)/.test(t.trim())) pool = responses.greeting;
+    else if (/math|algebra|equation|formula|geometry|fraction|percent|multiply|divide|calculate|数学|计算|公式|方程/.test(t)) pool = responses.math;
+    else if (/essay|write|writing|paragraph|thesis|argument|draft|conclusion|作文|写作|论文/.test(t)) pool = responses.essay;
+    else if (/science|biology|chemistry|physics|photosynthesis|cell|atom|energy|experiment|科学|生物|化学|物理/.test(t)) pool = responses.science;
+    else if (/history|war|revolution|historical|civilization|ancient|empire|历史|战争|革命/.test(t)) pool = responses.history;
+    else if (/test|exam|quiz|study|review|memorize|panic|考试|复习|学习/.test(t)) pool = responses.test;
+    else if (/stressed|overwhelmed|anxious|worried|too much|tired|压力|焦虑|担心|累/.test(t)) pool = responses.stress;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
   async function sendMessage() {
     const input = document.getElementById('chat-input');
     const text = input.value.trim();
@@ -1119,38 +1240,21 @@ Keep responses SHORT — 2 to 4 sentences max. Sound like a real person, not a r
 
     const typingInterval = addTyping();
 
-    try {
-      const geminiMessages = chatHistory.map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }]
-      }));
-      const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyC85TFml6Qcn-J5JldRyp_y8bsZKKEmElM', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: geminiMessages
-        })
-      });
-      const data = await res.json();
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Hmm, I had trouble connecting. Try again!";
+    await new Promise(r => setTimeout(r, 1200 + Math.random() * 800));
 
-      clearInterval(typingInterval);
-      document.getElementById('typing-indicator')?.remove();
+    clearInterval(typingInterval);
+    document.getElementById('typing-indicator')?.remove();
 
-      chatHistory.push({ role: 'assistant', content: reply });
-      const botBubble = addMessage(reply, false);
-      botBubble.innerHTML = renderMarkdown(reply);
-    } catch(e) {
-      clearInterval(typingInterval);
-      document.getElementById('typing-indicator')?.remove();
-      addMessage("Oops, I couldn't connect right now. Try refreshing!", false);
-    }
+    const reply = getResponse(text);
+    chatHistory.push({ role: 'assistant', content: reply });
+    const botBubble = addMessage(reply, false);
+    botBubble.innerHTML = renderMarkdown(reply);
 
     input.disabled = false;
     document.getElementById('send-btn').disabled = false;
     input.focus();
   }
+
 
   function quickAsk(text) {
     document.getElementById('chat-input').value = text;
