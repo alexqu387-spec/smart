@@ -11,6 +11,13 @@ exports.handler = async (event) => {
     };
   }
 
+  if (!event.body) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "No body received" }),
+    };
+  }
+
   const parsed = JSON.parse(event.body);
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
